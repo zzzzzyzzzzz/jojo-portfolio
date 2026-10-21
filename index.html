@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jojo — UI/UX Designer</title>
+<meta name="description" content="Portfolio of Jojo, a UI/UX designer working on games, AR and Web3 products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ECE8E1; --ink:#1A1916; --muted:#6E6A62; --pill:rgba(26,25,22,.06); --pill-hover:rgba(26,25,22,.1); --line:rgba(26,25,22,.12); --thumb:#FAF8F4;
+  --ease:cubic-bezier(.22,.7,.2,1);
+  --font:"Figtree","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{background:var(--bg)}
+html,body{margin:0}
+body{background:transparent;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+a{color:inherit}
+html{scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
+#sb{position:fixed;top:0;right:0;bottom:0;width:14px;z-index:60;pointer-events:none}
+#sb.none{display:none}
+#sb i{position:absolute;top:0;right:3px;width:5px;border-radius:99px;background:rgba(26,25,22,.3);opacity:0;pointer-events:none;
+  transition:opacity .4s ease,width .2s ease,background-color .2s ease}
+#sb.on i{opacity:1;pointer-events:auto;cursor:grab}
+#sb i:hover,#sb.drag i{width:7px;background:rgba(26,25,22,.5)}
+#sb.drag i{cursor:grabbing}
+@media (pointer:coarse){#sb i{width:3px;right:2px}}
+
+.profile,.tabs,main,footer{position:relative;z-index:1}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid #7B6CF6;outline-offset:3px;border-radius:8px}
+.col{width:min(760px,100% - 2rem);margin-inline:auto}
+.wide{width:min(1100px,100% - 2.5rem);margin-inline:auto}
+
+/* ---------- header ---------- */
+.profile{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(1.5rem,4.5dvh,3rem) 1rem 0;flex:none}
+.avatar{display:block;width:56px;height:56px;border-radius:16px;margin-bottom:.75rem;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 4px 14px rgba(26,25,22,.12);transition:transform .3s var(--ease)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar:hover{transform:scale(1.06)}
+.profile h1{margin:0;font-size:1.3rem;font-weight:600;letter-spacing:-.01em}
+.profile p{margin:.2rem 0 0;color:var(--muted);font-size:.95rem;white-space:nowrap}
+@media (max-width:420px){.profile p{white-space:normal;max-width:30ch}}
+.tabs{display:flex;justify-content:center;width:100%;margin:clamp(.9rem,2.6dvh,1.6rem) 0 clamp(1rem,3dvh,2rem);flex:none}
+.pill{position:relative;display:inline-flex;padding:4px;background:rgba(236,232,225,.75);box-shadow:inset 0 0 0 1px var(--line);border-radius:999px}
+.pill .thumb{position:absolute;top:4px;bottom:4px;left:0;border-radius:999px;background:var(--thumb);box-shadow:0 1px 3px rgba(20,20,24,.12);transition:transform .35s var(--ease),width .35s var(--ease)}
+.pill a{position:relative;z-index:1;font-size:.95rem;font-weight:500;color:var(--muted);text-decoration:none;padding:.45rem 1.4rem;border-radius:999px;transition:color .25s ease}
+.pill a:hover,.pill a[aria-current="page"]{color:var(--ink)}
+
+main{flex:1 0 auto;display:flex;flex-direction:column}
+footer{flex:none;border-top:1px solid var(--line);padding:1.1rem 0 1.4rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+footer a{text-decoration:none;transition:color .2s ease}
+.foot-links{display:flex;gap:1.25rem;flex-wrap:wrap}
+footer a:hover{color:var(--ink)}
+
+/* ---------- work grid ---------- */
+.work{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.1rem,2.6dvh,1.8rem) 1.6rem;padding-bottom:clamp(1rem,3dvh,2rem)}
+.card{display:flex;flex-direction:column;text-decoration:none;min-height:0}
+.cover{position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden;background:#1a1a22;display:grid;place-items:center;isolation:isolate;container-type:size}
+.cover .bg{position:absolute;inset:-6%;width:112%;height:112%;max-width:none;object-fit:cover;filter:blur(10px) saturate(1.15);z-index:-2;transition:transform .8s var(--ease)}
+.cover::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--veil,rgba(10,10,16,.4));transition:opacity .45s ease}
+.cover .mark{display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease)}
+.card:hover .cover .bg{transform:scale(1.06)}
+.card:hover .cover::after{opacity:.82}
+.card:hover .cover .mark{transform:translateY(-3px) scale(1.02)}
+.cap{padding:.7rem .15rem 0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.cap h2{margin:0;font-size:1rem;font-weight:500;letter-spacing:-.005em}
+.cap p{margin:.05rem 0 0;color:var(--muted);font-size:.92rem}
+.cap .go{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--pill);opacity:0;transform:translate(-4px,4px);transition:opacity .3s ease,transform .35s var(--ease)}
+.cap .go svg{width:14px;height:14px}
+.card:hover .cap .go,.card:focus-visible .cap .go{opacity:1;transform:none}
+
+/* logos, sized against the cover so all four read at a similar weight */
+.c-sea{--veil:rgba(6,30,26,.42)}
+.c-sea .mark{gap:6cqw}
+.c-sea .emblem{height:46cqh;width:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.25))}
+.c-sea .rule{width:1px;height:34cqh;background:rgba(255,255,255,.6)}
+.c-sea .app{height:28cqh;width:auto;border-radius:22%;box-shadow:0 10px 28px rgba(0,0,0,.28)}
+.c-mega{--veil:rgba(16,16,20,.56)}
+.c-mega .mark{flex-direction:column;gap:5cqh;color:#fff}
+.c-mega .icon{width:24cqh;height:24cqh}
+.c-mega .word{width:min(44cqw,150cqh);filter:invert(1)}
+.c-ufc{--veil:rgba(8,8,10,.48)}
+.c-ufc .logo{width:min(50cqw,190cqh);filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+.c-yume{--veil:rgba(12,12,30,.45)}
+.c-yume .logo{width:min(44cqw,160cqh);filter:drop-shadow(0 6px 18px rgba(0,0,0,.3))}
+
+/* home pages fill exactly one screen on desktop */
+@media (min-width:701px) and (min-height:600px){
+  body[data-route="work"]{height:100vh;height:100dvh;overflow:hidden}
+  body[data-route="work"] main{flex:1 1 auto;min-height:0}
+  body[data-route="work"] .work{flex:1;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr))}
+  body[data-route="work"] .cover{flex:1;min-height:0;aspect-ratio:auto}
+}
+@media (max-width:700px){
+  .work{grid-template-columns:1fr;gap:2rem}
+  .cap .go{opacity:1;transform:none}
+}
+
+/* ---------- project pages ---------- */
+.project{padding-bottom:3.5rem}
+.back{display:inline-flex;align-items:center;gap:.3rem;font-size:.92rem;color:var(--muted);text-decoration:none;margin-bottom:1.25rem;transition:color .2s ease}
+.back svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+.back:hover{color:var(--ink)}
+.back:hover svg{transform:translateX(-3px)}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem 1.5rem;flex-wrap:wrap}
+.project h2{margin:0;font-size:clamp(1.6rem,4.5vw,2.1rem);font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.project .lede{margin:.35rem 0 0;color:var(--muted);font-size:1.05rem}
+.ext{display:inline-flex;align-items:center;gap:.45rem;flex:none;font-weight:500;font-size:.92rem;text-decoration:none;padding:.55rem .95rem .55rem 1.1rem;border-radius:999px;background:var(--pill);transition:background-color .3s ease,color .3s ease}
+.ext svg{width:14px;height:14px;transition:transform .35s var(--ease)}
+.ext:hover{background:var(--ink);color:var(--bg)}
+.ext:hover svg{transform:translate(2px,-2px)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.6rem 0;padding:1.1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta dt{font-size:.82rem;color:var(--muted)}
+.meta dd{margin:.1rem 0 0;font-size:.95rem;font-weight:500}
+.project h3{font-size:1.05rem;font-weight:600;margin:2.25rem 0 .4rem;display:flex;align-items:center;gap:.6rem}
+.project h3 img{width:28px;height:28px;border-radius:8px}
+.project p.body{margin:0 0 .9rem;color:#2C2A26;max-width:65ch}
+.shots{display:grid;gap:1.5rem;margin:1.25rem 0 0}
+.shots figure,.clients figure{margin:0}
+.shots img{width:100%;height:auto;border-radius:14px;background:var(--pill)}
+figcaption{margin-top:.5rem;font-size:.88rem;color:var(--muted)}
+.fade{opacity:0;transition:opacity .6s ease}
+.fade.in{opacity:1}
+.clients{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.75rem 1.5rem;margin-top:1.25rem}
+@media (max-width:600px){.clients{grid-template-columns:1fr}}
+.clients img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;background:var(--pill)}
+.clients h4{margin:.7rem 0 .15rem;font-size:.98rem;font-weight:600}
+.clients p{margin:0;font-size:.92rem;color:#3B3832}
+.note{color:var(--muted);font-size:.95rem;margin-top:1.5rem}
+
+/* ---------- about ---------- */
+.about{padding-bottom:3rem}
+.about h2{font-size:1rem;font-weight:600;margin:2rem 0 .5rem}
+.about h2:first-child{margin-top:0}
+.about p{margin:0 0 .9rem;color:#2C2A26}
+.about ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.about li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--line)}
+.about li span:last-child{color:var(--muted);text-align:right}
+.about li a{text-decoration:none;transition:color .2s ease}
+.about li a:hover{color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important}
+  .fade{opacity:1}
+}
+</style>
+</head>
+<body data-route="work">
+<div id="sb" aria-hidden="true"><i></i></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-ext" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 16 16"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 56 56"><path d="M28.1471 29.5908L28.0868 29.5911L23.4573 15.7849L17.2275 15.8215L17.1101 35.6444C18.1859 35.0718 19.4058 34.5826 20.7336 34.1892L20.8069 21.8134L20.8765 20.2224L26.318 33.2527C27.0293 33.1882 27.2343 33.1629 27.9693 33.1586C28.7043 33.1543 28.8969 33.1893 29.6076 33.2333L35.2046 19.9937L35.2554 21.584L35.1813 34.1043C36.4924 34.4822 37.7066 34.9571 38.7877 35.5171L38.9051 15.6942L32.6754 15.7308L28.135 29.5908L28.1471 29.5908Z" fill="currentColor"/><path d="M22.9099 43.1502C24.2476 43.1424 25.3384 42.0516 25.3463 40.7139C25.3542 39.3762 24.2763 38.2981 22.9386 38.306C21.601 38.3138 20.5102 39.4046 20.5023 40.7423C20.4943 42.08 21.5723 43.1581 22.9099 43.1502Z" fill="currentColor"/><path d="M32.9118 43.0915C34.2494 43.0837 35.3402 41.9929 35.3482 40.6552C35.3561 39.3174 34.2781 38.2394 32.9405 38.2472C31.6029 38.2551 30.5121 39.3459 30.5042 40.6836C30.4963 42.0213 31.5742 43.0994 32.9118 43.0915Z" fill="currentColor"/><path d="M28.1647 0.163623C12.8133 0.25381 0.255637 12.8114 0.164695 28.1636C0.0737534 43.5159 12.4835 55.9268 27.8349 55.8366C43.1864 55.7464 55.744 43.1888 55.8349 27.8366C55.9259 12.4843 43.5162 0.073436 28.1647 0.163623ZM27.8569 52.125C14.5539 52.2032 3.79726 41.4455 3.87606 28.1418C3.95487 14.8382 14.8397 3.9533 28.1427 3.87515C41.4458 3.797 52.2023 14.5547 52.1235 27.8584C52.0447 41.162 41.1599 52.0469 27.8569 52.125Z" fill="currentColor"/></symbol>
+</svg>
+
+<header class="profile">
+  <a class="avatar" href="#work" aria-label="Jojo, home"><img alt="" src="data:image/jpeg;base64,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"></a>
+  <h1>Jojo</h1>
+  <p>Designing the half-second between seeing and doing.</p>
+</header>
+
+<div class="tabs">
+  <nav class="pill" aria-label="Sections">
+    <span class="thumb" aria-hidden="true"></span>
+    <a href="#work" data-tab="work">Work</a>
+    <a href="#about" data-tab="about">About</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ============ WORK (2x2) ============ -->
+<section data-view="work" class="work wide">
+
+  <a class="card" href="#ufc">
+    <div class="cover c-ufc">
+      <img class="bg" alt="" src="https://drop-assets.ea.com/images/4Wqj7zutBJkQf0GzQrvSi5/0f647c5eb9d83288739ef4a9a236fb07/EA_UFC5_DLX_FP_RGB_Horizontal_16-9_3840x2160.jpg">
+      <div class="mark"><img class="logo" alt="EA SPORTS UFC 5" src="https://drop-assets.ea.com/images/7Dx4nROmD8Iy61CuHhUdbo/99a1ebf0a07247e13debb95efa0002a4/ufc5-logo-reveal-white-1.png"></div>
+    </div>
+    <div class="cap"><div><h2>EA SPORTS UFC 5</h2><p>With the EA SPORTS UFC team</p></div><span class="go" aria-hidden="true"><svg><use href="#i-ext"/></svg></span></div>
+  </a>
+
+  <a class="card" href="#seawin">
+    <div class="cover c-sea">
+      <img class="bg" alt="" src="https://cdn.prod.website-files.com/66c60fb42f2b388110e985ff/6a332c1429424b9054180665_20260612_SOCCERHOUSE_JANEGPHOTO-160%20copy.avif">
+      <div class="mark">
+        <img class="emblem" alt="FIFA World Cup 26 Seattle" src="https://cdn.prod.website-files.com/66c60fb42f2b388110e985ff/67990c6db09f514725ac037a_677c599ed19a4122596420dd_fwc2026_hcl_sea_rgbt_pat_m%201%20(1).png">
+        <span class="rule" aria-hidden="true"></span>
+        <img class="app" alt="SEA&amp;WIN" src="https://cdn.prod.website-files.com/66c60fb42f2b388110e985ff/698cf0ccf18d7de0d193efeb_SEA26_App-LogoIcon_Logo.svg">
+      </div>
+    </div>
+    <div class="cap"><div><h2>SEA&amp;WIN</h2><p>The official game of the Seattle FIFA World Cup 26™</p></div><span class="go" aria-hidden="true"><svg><use href="#i-ext"/></svg></span></div>
+  </a>
+
+  <a class="card" href="#yumebau">
+    <div class="cover c-yume">
+      <img class="bg" alt="" src="https://www.yumebau.com/lab_products/buildportxumia/BuildPortXumia_ConceptArt_shot1.jpg">
+      <div class="mark"><img class="logo" alt="Yumebau" src="https://www.yumebau.com/assets/YumeBau_White_noShadow-D40l2utv.png"></div>
+    </div>
+    <div class="cap"><div><h2>Yumebau</h2><p>Game studio and lab for the spatial age</p></div><span class="go" aria-hidden="true"><svg><use href="#i-ext"/></svg></span></div>
+  </a>
+
+  <a class="card" href="#megaeth">
+    <div class="cover c-mega">
+      <img class="bg" alt="" src="https://static.megaeth.com/official-site/banner-md.webp">
+      <div class="mark" role="img" aria-label="MegaETH">
+        <svg class="icon" aria-hidden="true"><use href="#i-mega"/></svg>
+        <img class="word" alt="" src="https://www.megaeth.com/assets/img/mega-type-black.svg">
+      </div>
+    </div>
+    <div class="cap"><div><h2>MegaETH</h2><p>The World Computer, in real time</p></div><span class="go" aria-hidden="true"><svg><use href="#i-ext"/></svg></span></div>
+  </a>
+
+</section>
+
+<!-- ============ SEA&WIN ============ -->
+<article data-view="seawin" class="project col" hidden>
+  <a class="back" href="#work"><svg aria-hidden="true"><use href="#i-back"/></svg>All work</a>
+  <div class="phead">
+    <div><h2>SEA&amp;WIN</h2><p class="lede">The official mobile game of the Seattle FIFA World Cup 26™</p></div>
+    <a class="ext" href="https://www.seattlefwc26.org/seaandwin" target="_blank" rel="noopener">Visit site<svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+  </div>
+  <dl class="meta">
+    <div><dt>Client</dt><dd>SeattleFWC26</dd></div>
+    <div><dt>Studio</dt><dd>Yumebau</dd></div>
+    <div><dt>Platform</dt><dd>iOS and Android</dd></div>
+    <div><dt>Year</dt><dd>2025–2026</dd></div>
+  </dl>
+  <p class="body">SEA&amp;WIN brought the World Cup beyond the stadium. Fans walk themed tours across Seattle and Washington State, check in at stops, answer quizzes and play AR soccer mini-games to earn points, then redeem them for prizes at local partner sites.</p>
+  <p class="body">The free app launched in March 2026 and ran through the tournament as part of SeattleFWC26’s legacy work, sending visitors to public art, cultural spaces and small businesses across the state.</p>
+  <div class="shots">
+    <figure><img class="fade" loading="lazy" alt="A phone showing a SEA&amp;WIN quiz result in a public square" src="https://cdn.prod.website-files.com/67575827fb00851faf9b8bf8/6a6a7feba0665a4d7cc5f812_SEA%26WIN%20-2%20.png"><figcaption>Quiz results, out in the city</figcaption></figure>
+    <figure><img class="fade" loading="lazy" alt="A phone showing the SEA&amp;WIN launch screen" src="https://cdn.prod.website-files.com/67575827fb00851faf9b8bf8/6a6a7f9ca0665a4d7cc5e027_SEA%26WIN.png"><figcaption>SEA&amp;WIN on the street</figcaption></figure>
+  </div>
+</article>
+
+<!-- ============ MegaETH ============ -->
+<article data-view="megaeth" class="project col" hidden>
+  <a class="back" href="#work"><svg aria-hidden="true"><use href="#i-back"/></svg>All work</a>
+  <div class="phead">
+    <div><h2>MegaETH</h2><p class="lede">The first real-time blockchain</p></div>
+    <a class="ext" href="https://www.megaeth.com/" target="_blank" rel="noopener">Visit site<svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+  </div>
+  <dl class="meta">
+    <div><dt>Role</dt><dd>Design</dd></div>
+    <div><dt>Network</dt><dd>Ethereum Layer 2</dd></div>
+    <div><dt>Throughput</dt><dd>100K+ tx per second</dd></div>
+    <div><dt>Block time</dt><dd>Under 10 ms</dd></div>
+  </dl>
+  <p class="body">MegaETH is built around the idea of a World Computer: one fast, shared machine that every app can run on. It launched its mainnet in early 2026 and has grown into an ecosystem of apps, games and community projects.</p>
+  <div class="shots">
+    <figure><img class="fade" loading="lazy" alt="MegaETH key visual" src="https://static.megaeth.com/official-site/banner-md.webp"><figcaption>MegaETH key visual</figcaption></figure>
+  </div>
+
+  <h3><img alt="" src="https://i2c.seadn.io/collection/world-computer-netizens-777238059/image_type_logo/500e0405e35f6e5250baa878eac928/d3500e0405e35f6e5250baa878eac928.png?h=250&amp;w=250">World Computer Netizens</h3>
+  <p class="body">The first NFT collection launched on MegaETH, released in February 2026.</p>
+  <div class="shots">
+    <figure><img class="fade" loading="lazy" alt="World Computer Netizens banner" src="https://i2c.seadn.io/collection/world-computer-netizens-megaeth/image_type_hero_desktop/fbb3eb27b4206c2ce9db2879df9ef6/59fbb3eb27b4206c2ce9db2879df9ef6.png?w=2000"></figure>
+  </div>
+
+  <h3>Around the ecosystem</h3>
+  <div class="shots">
+    <figure><img class="fade" loading="lazy" alt="MegaArcade event in Seoul" src="https://www.megaeth.com/assets/img/blog-news/megaarcade-lands-in-seoul/banner.png"><figcaption>MegaArcade, Seoul</figcaption></figure>
+  </div>
+  <p class="note">A detailed case study is on its way.</p>
+</article>
+
+<!-- ============ UFC ============ -->
+<article data-view="ufc" class="project col" hidden>
+  <a class="back" href="#work"><svg aria-hidden="true"><use href="#i-back"/></svg>All work</a>
+  <div class="phead">
+    <div><h2>EA SPORTS UFC 5</h2><p class="lede">The MMA fighting game from EA SPORTS</p></div>
+    <a class="ext" href="https://www.ea.com/games/ufc/ufc-5" target="_blank" rel="noopener">Visit site<svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+  </div>
+  <dl class="meta">
+    <div><dt>Team</dt><dd>EA SPORTS UFC</dd></div>
+    <div><dt>Focus</dt><dd>VR development, UI/UX</dd></div>
+    <div><dt>Platform</dt><dd>PS5 and Xbox Series X|S</dd></div>
+  </dl>
+  <p class="body">UFC 5 brings the Octagon to life with realistic fighters, a new damage system and cinematic presentation built on EA’s Frostbite engine. Since launch, the team has kept the game growing with new fighters, Alter Egos and community events.</p>
+  <div class="shots">
+    <figure><img class="fade" loading="lazy" alt="UFC 5 key art featuring Israel Adesanya" src="https://drop-assets.ea.com/images/4Wqj7zutBJkQf0GzQrvSi5/0f647c5eb9d83288739ef4a9a236fb07/EA_UFC5_DLX_FP_RGB_Horizontal_16-9_3840x2160.jpg"><figcaption>UFC 5 key art</figcaption></figure>
+    <figure><img class="fade" loading="lazy" alt="UFC 5 cinematic in-game screenshot" src="https://drop-assets.ea.com/images/6LJhIGYlerdlwi8Haev2mu/d7b2af62f3ea6f8d6f65e91136bae778/ufc5-screenshot-02-16x9.jpg"><figcaption>In-game cinematic</figcaption></figure>
+    <figure><img class="fade" loading="lazy" alt="UFC 5 Pride Series II Alter Egos key art" src="https://drop-assets.ea.com/images/4X2QoWKJwC4LFfZYVfoMw4/d6520bad20adc265275ff86e407310be/ufc5-pride-ii-alteregos-keyart-1920x1080-1.jpg"><figcaption>Alter Egos: Pride Series II</figcaption></figure>
+  </div>
+</article>
+
+<!-- ============ Yumebau ============ -->
+<article data-view="yumebau" class="project col" hidden>
+  <a class="back" href="#work"><svg aria-hidden="true"><use href="#i-back"/></svg>All work</a>
+  <div class="phead">
+    <div><h2>Yumebau</h2><p class="lede">Game studio and lab for the spatial age</p></div>
+    <a class="ext" href="https://www.yumebau.com/" target="_blank" rel="noopener">Visit site<svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+  </div>
+  <dl class="meta">
+    <div><dt>Focus</dt><dd>VR, AR and games</dd></div>
+    <div><dt>Recent</dt><dd>SEA&amp;WIN</dd></div>
+  </dl>
+  <p class="body">Yumebau builds games and interactive worlds for emerging platforms, from VR and mixed reality to location-based AR. Alongside client work, its lab develops original IP, including BuildPort Xumia, a city-building game designed for spatial computing.</p>
+  <div class="shots">
+    <figure><img class="fade" loading="lazy" alt="BuildPort Xumia concept art" src="https://www.yumebau.com/lab_products/buildportxumia/BuildPortXumia_ConceptArt_shot1.jpg"><figcaption>BuildPort Xumia, Yumebau’s original IP, now on Meta Quest</figcaption></figure>
+  </div>
+  <h3>Selected clients</h3>
+  <div class="clients">
+    <figure>
+      <img class="fade" loading="lazy" alt="Fortnite environment art" src="https://www.yumebau.com/projects/FORTNITE/Fortnite_Yumebau_Chapter4_ArtProd_3.jpg">
+      <h4>Fortnite by Epic Games</h4>
+      <p>One of the world’s most-played games. Yumebau has worked on Fortnite environments and technical art since 2021, including the Fortnite OG season.</p>
+    </figure>
+    <figure>
+      <img class="fade" loading="lazy" alt="Meta mixed reality prototype" src="https://www.yumebau.com/projects/META/1.png">
+      <h4>Meta</h4>
+      <p>The company behind the Quest headsets. Yumebau partners with Meta on XR research and prototyping for mixed reality.</p>
+    </figure>
+    <figure>
+      <img class="fade" loading="lazy" alt="Acronym augmented reality game" src="https://www.yumebau.com/projects/ACRONYM/1.png">
+      <h4>Acronym</h4>
+      <p>A Berlin technical apparel label with a cult following. Yumebau created a branded AR game where a wayward AI enters the real world through portals around the globe.</p>
+    </figure>
+    <figure>
+      <img class="fade" loading="lazy" alt="Merck mobile AR experience" src="https://www.yumebau.com/projects/MERCK/1.jpg">
+      <h4>Merck</h4>
+      <p>A global science and technology company. Yumebau built a mobile AR experience for continuous education.</p>
+    </figure>
+    <figure>
+      <img class="fade" loading="lazy" alt="Ontario Science Centre AR experience" src="https://www.yumebau.com/projects/OSC/1.jpg">
+      <h4>Ontario Science Centre</h4>
+      <p>Toronto’s science museum. A mobile AR experience timed to NASA’s Perseverance rover landing on Mars in 2021.</p>
+    </figure>
+    <figure>
+      <img class="fade" loading="lazy" alt="Chinatown Storytelling Centre AR exhibit" src="https://www.yumebau.com/projects/ChinatownCSC/1.jpg">
+      <h4>Chinatown Storytelling Centre</h4>
+      <p>A museum dedicated to the stories of Chinatown. Yumebau developed a series of AR exhibits to bring those stories to life.</p>
+    </figure>
+  </div>
+  <p class="note">Other clients include Microsoft and Netflix Games.</p>
+</article>
+
+<!-- ============ ABOUT ============ -->
+<section data-view="about" class="about col" hidden>
+  <h2>About</h2>
+  <p>I design for the moments when nobody has time to read: a fighter mid-exchange, a fan on a street corner with one bar of signal, a transaction that settles before you blink.</p>
+  <p>I came to design sideways. Before this I spent years writing code and working as a technical artist, so I sketch in Figma and in the engine, and I care about how a thing gets built as much as how it looks.</p>
+  <p>Open to new roles. If you’re making something people use on the move, I’d love to hear about it.</p>
+  <h2>Worked with</h2>
+  <ul>
+    <li><span>EA SPORTS</span><span>UFC team</span></li>
+    <li><span>SeattleFWC26</span><span>SEA&amp;WIN</span></li>
+    <li><span>Yumebau</span><span>Game studio and lab</span></li>
+    <li><span>MegaETH</span><span>Real-time blockchain</span></li>
+  </ul>
+  <h2>Contact</h2>
+  <ul>
+    <li><span>Email</span><span><a href="mailto:jojonowhere27@gmail.com">jojonowhere27@gmail.com</a></span></li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="wide">
+  <span>Jojo ©2026</span>
+  <span class="foot-links"><a href="mailto:jojonowhere27@gmail.com">Email</a></span>
+</footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var views = {};
+  document.querySelectorAll('[data-view]').forEach(function(v){ views[v.getAttribute('data-view')] = v; });
+  var tabs = document.querySelectorAll('[data-tab]');
+  var thumb = document.querySelector('.pill .thumb');
+  var titles = {work:'Jojo — UI/UX Designer', about:'About — Jojo', seawin:'SEA&WIN — Jojo', megaeth:'MegaETH — Jojo', ufc:'EA SPORTS UFC 5 — Jojo', yumebau:'Yumebau — Jojo'};
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var EASE = 'cubic-bezier(.22,.7,.2,1)';
+  var current = null, leaving = null;
+
+  // Remove a local screenshot cleanly if its file is gone; fade every image in once it loads.
+  document.querySelectorAll('img.fade').forEach(function(img){
+    function done(){ img.classList.add('in'); }
+    if (img.complete && img.naturalWidth) done();
+    else if (img.complete && img.getAttribute('src') && !img.naturalWidth && img.loading !== 'lazy') { var f0 = img.closest('figure'); if (f0) f0.remove(); return; }
+    img.addEventListener('load', done);
+    img.addEventListener('error', function(){ var f = img.closest('figure'); if (f) f.remove(); });
+  });
+
+  var firstThumb = true;
+  function moveThumb(tab){
+    var a = document.querySelector('[data-tab="'+tab+'"]');
+    if (firstThumb) { thumb.style.transition = 'none'; requestAnimationFrame(function(){ requestAnimationFrame(function(){ thumb.style.transition = ''; }); }); firstThumb = false; }
+    thumb.style.width = a.offsetWidth + 'px';
+    thumb.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+  }
+
+  function enter(name){
+    var next = views[name];
+    next.hidden = false;
+    body.setAttribute('data-route', name);
+    window.scrollTo(0, 0);
+    current = next;
+    if (window.__sb) window.__sb();
+    if (reduce) return;
+    next.animate([{opacity:0, transform:'translateY(10px)'},{opacity:1, transform:'none'}], {duration:420, easing:EASE});
+    if (name === 'work') {
+      next.querySelectorAll('.card').forEach(function(c, i){
+        c.animate([{opacity:0, transform:'translateY(14px)'},{opacity:1, transform:'none'}], {duration:520, delay:60*i, easing:EASE, fill:'backwards'});
+      });
+    }
+  }
+
+  var target = null;
+  function route(){
+    var name = (location.hash || '#work').slice(1);
+    if (!titles[name]) name = 'work';
+    var tab = name === 'about' ? 'about' : 'work';
+    tabs.forEach(function(t){
+      if (t.getAttribute('data-tab') === tab) t.setAttribute('aria-current','page');
+      else t.removeAttribute('aria-current');
+    });
+    moveThumb(tab);
+    document.title = titles[name];
+    target = name;
+    if (leaving) return;                     // the running exit will enter the latest target
+    if (current === views[name]) return;
+    if (!current || reduce) {
+      if (current) current.hidden = true;
+      enter(name);
+      return;
+    }
+    var old = current;
+    leaving = old.animate([{opacity:1, transform:'none'},{opacity:0, transform:'translateY(-6px)'}], {duration:180, easing:'ease-in', fill:'forwards'});
+    leaving.onfinish = function(){
+      var anim = leaving; leaving = null;
+      if (views[target] === old) { anim.cancel(); return; }
+      old.hidden = true;
+      anim.cancel();
+      enter(target);
+    };
+  }
+
+  window.addEventListener('hashchange', route);
+  window.addEventListener('resize', function(){ moveThumb(body.getAttribute('data-route') === 'about' ? 'about' : 'work'); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ moveThumb(body.getAttribute('data-route') === 'about' ? 'about' : 'work'); });
+  route();
+})();
+</script>
+<script>
+/* ---------- overlay scrollbar: appears only while scrolling, never takes layout width ---------- */
+(function(){
+  var sb = document.getElementById('sb'), th = sb.firstElementChild, hideT = 0, dragging = false, y0 = 0, s0 = 0;
+  var root = document.scrollingElement || document.documentElement;
+  function layout(){
+    var vh = window.innerHeight, sh = root.scrollHeight;
+    if (sh <= vh + 1) { sb.classList.add('none'); return false; }
+    sb.classList.remove('none');
+    var h = Math.max(36, vh * vh / sh), top = (window.scrollY / (sh - vh)) * (vh - h);
+    th.style.height = h + 'px'; th.style.transform = 'translateY(' + top + 'px)';
+    return true;
+  }
+  function show(){
+    if (!layout()) return;
+    sb.classList.add('on'); clearTimeout(hideT);
+    if (!dragging) hideT = setTimeout(function(){ sb.classList.remove('on'); }, 900);
+  }
+  window.__sb = layout;
+  window.addEventListener('scroll', show, {passive:true});
+  window.addEventListener('resize', layout);
+  window.addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse' && e.clientX > window.innerWidth - 18) show(); }, {passive:true});
+  th.addEventListener('pointerdown', function(e){ dragging = true; th.setPointerCapture(e.pointerId); y0 = e.clientY; s0 = window.scrollY; sb.classList.add('on', 'drag'); e.preventDefault(); });
+  th.addEventListener('pointermove', function(e){
+    if (!dragging) return;
+    var vh = window.innerHeight, sh = root.scrollHeight, h = th.offsetHeight;
+    window.scrollTo(0, s0 + (e.clientY - y0) * (sh - vh) / (vh - h));
+  });
+  function end(){ dragging = false; sb.classList.remove('drag'); show(); }
+  th.addEventListener('pointerup', end); th.addEventListener('pointercancel', end);
+  window.addEventListener('load', layout);
+})();
+
+</script>
+</body>
+</html>
